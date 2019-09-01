@@ -71,11 +71,11 @@ public class Worker {
 		long endTime   = System.nanoTime();
 		System.out.println("**********Total time execution : " + (double)(((double)endTime - (double)startTime)/1000000000.0) + " seconds");
 		try {
-		    if (!typeAExecutor.awaitTermination(100000, TimeUnit.MILLISECONDS)) {
+		    if (!typeAExecutor.awaitTermination(10, TimeUnit.MINUTES)) {
 		    	typeAExecutor.shutdownNow();
 		    	//PropertyHolder.removeProperties();
 		    }
-		    if (typeBExecutor.awaitTermination(100000, TimeUnit.MILLISECONDS)) {
+		    if (typeBExecutor.awaitTermination(10, TimeUnit.MINUTES)) {
 		    	typeBExecutor.shutdownNow();
 		    	//PropertyHolder.removeProperties();
 		    }		    
