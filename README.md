@@ -1,2 +1,0 @@
-# LogReaderWriter
-Multithreaded read write
