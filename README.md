@@ -1,14 +1,24 @@
-### 1. How to run binary exercise
+### 1. How to configure binary exercise
 
   1) from run folder execute runWriter.bat or runReader.bat
   2) The below properties can be configured
      a) logwriter.properties:
        * writer.buffer.size - configuration for thread local buffer - number of lines thread writes into the file commit.log
-       * a.writer.thread.pool - number of type A threads.
-       * b.writer.thread.pool - number of type B threads
-       * writer.total.iterations - total number of lines will be writen into the file. After that threads will finish the work.
-       * log.commit.file -  full path of file
+        Examples : log.commit.file=D:\\Temp\\commit.log or run as java -cp . -jar logwriter-1.0.0.jar logwriter.properties.
+       * a.writer.thread.pool - number of threads type A.
+       * b.writer.thread.pool - number of threads type B.
+       * writer.total.iterations - total number of lines will be writen into the file. After that, threads will finish the work.
+       * log.commit.file -  full path of the file or file has to be in classpath
      b) logreader.properties
-       * log.commit.file - full path of file
+       * log.commit.file - full path of the file or file has to be in classpath.
+       
+### 2. How to run binary excercise
 
-### 2. Assumtions
+  The excercise can be run by excecuting bat files in run directory.
+  
+ ### 3. Assumtions ( for simplicity )
+
+  1. There are 2 projects with 2 property files. Every project has a single package.
+  2. There is only 1 unit test case writen only for rule 3 - Unique uid for thread cid.
+  3. The log file is not rolling if it reaches the certain size.
+  4. During App startup there is cleanup happens : the log file will be removed and all previous commits will be lost.
