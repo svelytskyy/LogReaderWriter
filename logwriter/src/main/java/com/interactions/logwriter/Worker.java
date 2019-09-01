@@ -2,12 +2,14 @@ package com.interactions.logwriter;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Worker {
 	
 	public void init(String rootAppPath) {
-		String path = "";
+		String path = null;
 		if(rootAppPath == null) path = Constants.PROPERTY_FILE_WRITER;
+		else path = rootAppPath;
 		PropertyHolder.getInstance(path);
 		Counter.getInstance();
 		String commitFile = (PropertyHolder.getProperty("log.commit.file")==null)?"commit.log":PropertyHolder.getProperty("log.commit.file");
@@ -34,6 +36,20 @@ public class Worker {
 		ExecutorService typeBExecutor = Executors.newFixedThreadPool(typeB); 
 		for(int i=0;i<typeB;i++){
 			typeBExecutor.submit(new ThreadWriter(writer,i,"B", typeB, iterations));
+		}
+		
+		typeAExecutor.shutdown();
+		typeBExecutor.shutdown();
+		try {
+		    if (!typeAExecutor.awaitTermination(100000, TimeUnit.MILLISECONDS)) {
+		    	typeAExecutor.shutdownNow();
+		    } 
+		    if (!typeBExecutor.awaitTermination(100000, TimeUnit.MILLISECONDS)) {
+		    	typeBExecutor.shutdownNow();
+		    } 
+		} catch (InterruptedException e) {
+			typeAExecutor.shutdownNow();
+			typeBExecutor.shutdownNow();
 		}
 		
 	}

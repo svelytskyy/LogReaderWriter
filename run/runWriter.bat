@@ -1,0 +1,1 @@
+java -cp . -jar logwriter-1.0.0.jar logwriter.properties
