@@ -21,4 +21,4 @@
   1. There are 2 projects with 2 property files. Every project has a single package.
   2. There is only 1 unit test case writen only for rule 3 - Unique uid for thread cid.
   3. The log file is not rolling if it reaches the certain size.
-  4. During App startup there is cleanup happens : the log file will be removed and all previous commits will be erased.
+  4. During App startup there is cleanup happens : the log file will be removed and all previous commits will be lost.
