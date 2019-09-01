@@ -25,3 +25,6 @@
   2. There is only 1 unit test case writen only for rule 3 - Unique uid for thread cid.
   3. The log file is not rolling if it reaches the certain size.
   4. During App startup there is cleanup happens : the log file will be removed and all previous commits will be lost.
+  
+  Class diagram :
+  https://github.com/svelytskyy/LogReaderWriter/blob/master/LogWriterClassDiagram.pdf
