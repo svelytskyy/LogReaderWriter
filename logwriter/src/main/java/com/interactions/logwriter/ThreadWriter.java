@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ThreadWriter implements Callable<Integer>{
+public class ThreadWriter implements Callable<String>{
 	
 	private FileWriter writer;
 	private ThreadLocal<List<String>> buffer = new ThreadLocal<List<String>>();
@@ -18,7 +18,7 @@ public class ThreadWriter implements Callable<Integer>{
 	private ConcurrentHashMap<String,String> map = new ConcurrentHashMap<String,String>();
 	
 	@Override
-	public Integer call() throws Exception {
+	public String call() throws Exception {
 		List<String> lst = new ArrayList<String>();
 		buffer.set(lst);
 		if("A".equals(cid))Thread.sleep(threadId*poolCount);
@@ -44,9 +44,9 @@ public class ThreadWriter implements Callable<Integer>{
 				System.out.println("writing into log :" + buffer.get());
 				lst.clear();
 			}
-			if(!running) System.out.println("Thread " + cid + threadId + " completed" );
+			//if(!running) System.out.println("Thread " + cid + threadId + " completed" );
 		}
-		return null;
+		return cid + threadId;
 
 	}
 	

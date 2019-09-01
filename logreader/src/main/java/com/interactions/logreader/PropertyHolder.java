@@ -1,5 +1,6 @@
 package com.interactions.logreader;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -26,6 +27,7 @@ public class PropertyHolder {
 		InputStream is = null;
 		try {
 			is = this.getClass().getClassLoader().getResourceAsStream(rootPath);
+			if(is == null) is = new FileInputStream(rootPath);
 			prop.load(is); 
 		}catch(Exception e) {
 			e.printStackTrace();

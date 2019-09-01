@@ -1,12 +1,17 @@
 package com.interactions.logwriter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public class Worker {
 	
 	public void init(String rootAppPath) {
+		long startTime = System.nanoTime();
 		String path = null;
 		if(rootAppPath == null) path = Constants.PROPERTY_FILE_WRITER;
 		else path = rootAppPath;
@@ -29,24 +34,51 @@ public class Worker {
 		}
 		
 		ExecutorService typeAExecutor = Executors.newFixedThreadPool(typeA); 
+		List<Future<String>> lstA = new ArrayList<Future<String>>();
 		for(int i=0;i<typeA;i++){
-			typeAExecutor.submit(new ThreadWriter(writer,i,"A", typeA, iterations));
+			Future<String> task = typeAExecutor.submit(new ThreadWriter(writer,i,"A", typeA, iterations));
+			lstA.add(task);
 		}
 		
 		ExecutorService typeBExecutor = Executors.newFixedThreadPool(typeB); 
+		List<Future<String>> lstB = new ArrayList<Future<String>>();
 		for(int i=0;i<typeB;i++){
-			typeBExecutor.submit(new ThreadWriter(writer,i,"B", typeB, iterations));
+			Future<String> task = typeBExecutor.submit(new ThreadWriter(writer,i,"B", typeB, iterations));
+			lstB.add(task);
 		}
 		
 		typeAExecutor.shutdown();
 		typeBExecutor.shutdown();
+		
+		for(Future<String> task : lstA) {
+			try {
+				System.out.println("Thread completed : " + task.get());
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		for(Future<String> task : lstB) {
+			try {
+				System.out.println("Thread completed : " + task.get());
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		long endTime   = System.nanoTime();
+		System.out.println("**********Total time execution : " + (double)(((double)endTime - (double)startTime)/1000000000.0) + " seconds");
 		try {
-		    if (!typeAExecutor.awaitTermination(100000, TimeUnit.MILLISECONDS) &&
-		    		typeBExecutor.awaitTermination(100000, TimeUnit.MILLISECONDS)) {
+		    if (!typeAExecutor.awaitTermination(100000, TimeUnit.MILLISECONDS)) {
 		    	typeAExecutor.shutdownNow();
+		    	//PropertyHolder.removeProperties();
+		    }
+		    if (typeBExecutor.awaitTermination(100000, TimeUnit.MILLISECONDS)) {
 		    	typeBExecutor.shutdownNow();
-		    	PropertyHolder.removeProperties();
-		    } 
+		    	//PropertyHolder.removeProperties();
+		    }		    
 		} catch (InterruptedException e) {
 			typeAExecutor.shutdownNow();
 			typeBExecutor.shutdownNow();
