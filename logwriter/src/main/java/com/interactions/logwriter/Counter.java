@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Counter {
 	
-	 private static volatile int count = 0;
+	 private static volatile long count = 0;
 	 private final static Lock lock1 = new ReentrantLock();
 	 private final static Lock lock2 = new ReentrantLock();
 	 
@@ -34,7 +34,7 @@ public class Counter {
 
 	 }
 	 
-	 public static int incrementAndGet() {
+	 public static long incrementAndGet() {
  		lock2.lock();
         try {
               count = count + 1;
