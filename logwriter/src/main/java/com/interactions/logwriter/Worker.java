@@ -41,17 +41,17 @@ public class Worker {
 		typeAExecutor.shutdown();
 		typeBExecutor.shutdown();
 		try {
-		    if (!typeAExecutor.awaitTermination(100000, TimeUnit.MILLISECONDS)) {
+		    if (!typeAExecutor.awaitTermination(100000, TimeUnit.MILLISECONDS) &&
+		    		typeBExecutor.awaitTermination(100000, TimeUnit.MILLISECONDS)) {
 		    	typeAExecutor.shutdownNow();
-		    } 
-		    if (!typeBExecutor.awaitTermination(100000, TimeUnit.MILLISECONDS)) {
 		    	typeBExecutor.shutdownNow();
+		    	PropertyHolder.removeProperties();
 		    } 
 		} catch (InterruptedException e) {
 			typeAExecutor.shutdownNow();
 			typeBExecutor.shutdownNow();
+			PropertyHolder.removeProperties();
 		}
-		
 	}
 
 }

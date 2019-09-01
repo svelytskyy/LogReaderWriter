@@ -41,5 +41,9 @@ public class PropertyHolder {
 		}
 		return prop;
 	}
-
+	
+	public static void removeProperties() {
+		prop = null;
+	}
+	
 }
