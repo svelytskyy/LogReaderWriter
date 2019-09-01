@@ -5,11 +5,11 @@
   
      2a) logwriter.properties:
        * writer.buffer.size - configuration for thread local buffer - number of lines thread writes into the file commit.log
-        Examples : log.commit.file=D:\\Temp\\commit.log or run as java -cp . -jar logwriter-1.0.0.jar logwriter.properties.
        * a.writer.thread.pool - number of threads type A.
        * b.writer.thread.pool - number of threads type B.
        * writer.total.iterations - total number of lines will be writen into the file. After that, threads will finish the work.
        * log.commit.file -  full path of the file or file has to be in classpath
+        Examples : log.commit.file=D:\\Temp\\commit.log or run as java -cp . -jar logwriter-1.0.0.jar logwriter.properties.
        
      2b) logreader.properties
        * log.commit.file - full path of the file or file has to be in classpath.
