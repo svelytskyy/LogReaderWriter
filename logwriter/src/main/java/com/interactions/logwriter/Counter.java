@@ -3,6 +3,12 @@ package com.interactions.logwriter;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Singleton class for generating counter used for uid in the file Entry
+ * @author Sergiy Velytskyy
+ * @version 1.0.0
+ *
+ */
 public class Counter {
 	
 	 private static volatile int count = 0;

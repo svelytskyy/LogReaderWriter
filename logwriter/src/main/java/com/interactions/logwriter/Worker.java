@@ -8,19 +8,39 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+/**
+ *  This class initialize PropertyHolder, Counter, FileWriter and Thread pools A and B
+ *  Counter and PropertyHolder - singletons
+ *  FileWriter, Thread id and cid, number of lines written into commit.log file is passed to each thread
+ *  
+ * @author Sergiy Velytskyy
+ * @version 1.0.0
+ *
+ */
 public class Worker {
-	
+	/**
+	 * This initialize PropertyHolder, Counter, FileWriter and Thread pools A and B
+	 * @param rootAppPath
+	 */
 	public void init(String rootAppPath) {
 		long startTime = System.nanoTime();
 		String path = null;
 		if(rootAppPath == null) path = Constants.PROPERTY_FILE_WRITER;
 		else path = rootAppPath;
+		//load properties
 		PropertyHolder.getInstance(path);
+		// init counter
 		Counter.getInstance();
 		String commitFile = (PropertyHolder.getProperty("log.commit.file")==null)?"commit.log":PropertyHolder.getProperty("log.commit.file");
+		// init FileWriter
 		FileWriter writer = new FileWriter(commitFile);
+		// pool Thread number of Threads A
 		int typeA = 0;
+		
+		// pool Thread number of Threads B
 		int typeB = 0;
+		
+		// total number of lines in commit.log file
 		long iterations = 0;
 		try {
 			typeA = Integer.parseInt(PropertyHolder.getProperty("a.writer.thread.pool"));
@@ -33,6 +53,7 @@ public class Worker {
 			e.printStackTrace();
 		}
 		
+		//init Thread pool type A
 		ExecutorService typeAExecutor = Executors.newFixedThreadPool(typeA); 
 		List<Future<String>> lstA = new ArrayList<Future<String>>();
 		for(int i=0;i<typeA;i++){
@@ -40,6 +61,7 @@ public class Worker {
 			lstA.add(task);
 		}
 		
+		//init Thread pool type B
 		ExecutorService typeBExecutor = Executors.newFixedThreadPool(typeB); 
 		List<Future<String>> lstB = new ArrayList<Future<String>>();
 		for(int i=0;i<typeB;i++){

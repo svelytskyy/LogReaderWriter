@@ -3,6 +3,13 @@ package com.interactions.logreader;
 import java.io.File;
 import java.util.Scanner;
 
+/**
+ * File Reader for Reading log.commit file
+ * Each Thread type (A or B) reads only certain cid Entry 
+ * @author velit
+ *
+ */
+		
 public class FileReader {
 	
 	private String fileName;

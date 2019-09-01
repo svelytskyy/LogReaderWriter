@@ -10,6 +10,13 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * FileWriter - writes Thread Buffer (List<String>) into the file (synch call) 
+ * it creates file if file doesn't exists 
+ * 
+ * @author velit
+ *
+ */
 public class FileWriter {
 	
 	public String fileName;

@@ -1,5 +1,10 @@
 package com.interactions.logwriter;
 
+/**
+ * Data Model of the file Entry - line
+ * @author velit
+ *
+ */
 public class LogEntry {
 	
 	public String cid;

@@ -5,6 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * This class - singleton is loading properties.
+ * @author Sergiy Velytskyy
+ * @version 1.0.0
+ *
+ */
+
 public class PropertyHolder {
 	
 	private static PropertyHolder holder;
